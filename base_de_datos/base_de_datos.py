@@ -1,6 +1,6 @@
 import sqlite3
 import getpass
-
+ 
 def main():
     username = input('Nombre del usuario: ')
     password = getpass.getpass('Contraseña: ')
@@ -9,12 +9,10 @@ def main():
         print('Login correcto')
     else:
         print('login incorrecto')
-        i = 3
+        i = 4
         usuario = input('Nombre de usuario: ')
         clave = getpass.getpass('Clave: ')
         crear_usuario(i, usuario, clave)
-        i += 1
-
 
 def verifica_credenciales(username, password):
     conn = sqlite3.connect('mifichero.db')
@@ -35,7 +33,7 @@ def verifica_credenciales(username, password):
     return True
 
 def crear_usuario(identificador, usuario, clave):
-    conn = sqlite3.connect('mifichero.db')
+    conn = sqlite3.connect('mifichero.db', isolation_level=None)
     cursor = conn.cursor()
     
     rows = cursor.execute(
@@ -43,7 +41,6 @@ def crear_usuario(identificador, usuario, clave):
         (identificador, usuario, clave)
         )
     
-    conn.commit()
     cursor.close()
     conn.close()
 
