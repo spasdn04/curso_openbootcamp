@@ -1,0 +1,32 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Director</title>
+    <link rel="stylesheet" type="text/css"href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <h1>{{ author }}</h1>
+    <p>fechas: {{ author.date_of_birth }} - {{author.date_of_death | default_if_none:"Está vivo"}}</p>
+    <br>
+
+    <h2>Peliculas que ha dirigido</h2>
+    <table>
+        {% for peliculas in author.film_set.all %}
+        <tr>
+            <td onclick="window.location.href='templates/{{peliculas.id}}'">
+                <span>{{ peliculas }}</span>
+            </td>
+            {% cycle '' '' '</tr><tr>' %}
+        {% empty %}
+            <td>No hay peliculas aún</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+</body>
+</html>
